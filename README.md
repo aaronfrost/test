@@ -22,7 +22,7 @@ In step two we will paste the fake data into our application
 
 
 ###Step 3: Display friend information
-* Use ng-repeat to create a new li for each person in the person array
+s* Use ng-repeat to create a new li for each person in the person array
 * use {{variable.property}}  bindings to fill the user's picture and data into the li content
 
 

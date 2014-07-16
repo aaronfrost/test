@@ -1,70 +1,72 @@
-<html>
+<html ng-app="app">
 <head>
-<script src='http://code.jquery.com/jquery-1.10.2.js' type='text/javascript'></script>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src='http://code.jquery.com/jquery-1.10.2.js' type='text/javascript'></script>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 
-<script src='http://code.angularjs.org/1.1.5/angular.js' type='text/javascript'></script>
-<script src='app.js' type='text/javascript'></script>
-<script src='FriendController.js' type='text/javascript'></script>
+  <script src='http://code.angularjs.org/1.1.5/angular.js' type='text/javascript'></script>
+  <script src='app.js' type='text/javascript'></script>
+  <script src='FriendController.js' type='text/javascript'></script>
 
 
 
-<link rel="stylesheet" type="text/css" href="style.css">
-<title>Facebook Lesson 18</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Facebook Lesson 18</title>
 </head>
 
-<body>
+<body ng-controller="FriendController">
+
+{{test}}
 
 <h1>The <strong>facebook</strong> Friend Machine</h1>
 
 <div class="friends">
 
 
-<form class="form-inline searchForm" role="form">
-  <div class="form-group">
+  <form class="form-inline searchForm" role="form">
+    <div class="form-group">
 
-  <input class="form-control" placeholder="Search Anything About Your Friends" >
-  <!-- The stuff below is For step 5....get rid of the one above if you wish-->
-<!--    
-    <input class="form-control" placeholder="Search Your Friends' Name" >
-    <input class="form-control" placeholder="Search Your Freinds' Location" > 
- -->
-    <select class="input-medium">
+      <input class="form-control" placeholder="Search Your Friends By Name" ng-model="searchTerm" >
+      <!-- The stuff below is For step 5....get rid of the one above if you wish-->
+      <!--
+          <input class="form-control" placeholder="Search Your Friends' Name" >
+          <input class="form-control" placeholder="Search Your Freinds' Location" >
+       -->
+      <select class="input-medium">
         <option>Name</option>
         <option># friends</option>
         <option>City</option>
         <option>State</option>
         <option>Country</option>
-    </select>
-    <select class="input-medium">
+      </select>
+      <select class="input-medium">
         <option value="false">Descending</option>
         <option value="true">Ascending</option>
-    </select>
-  </div>
-</form>
+      </select>
+    </div>
+  </form>
 
   <ul>
-    <li class='friend'>
-       <img class="profile-pic" src='https://scontent-a.xx.fbcdn.net/hprofile-ash3/833_10200838803828124_1233160321_a.jpg'>
-      <h3>Cali Fornia</h3>
+    <li ng-repeat="friend in friends | filter:searchTerm" class='friend'>
+      <img class="profile-pic" ng-src="{{friend.pic_square}}">
+      <h3>{{friend.name}}</h3>
       <div class="location">
-        Location: New Port Beach, California, United States
-      </div>      
-      <div class="status">
-        Status: I hate the snow. I wish I was on the beach right now!!! <span class="hashtag">#ihateprovo</span>
-      </div>      
+        Location: <span ng-show="friend.current_location != null">{{friend.current_location.city}}, {{friend.current_location.state}}, {{friend.current_location.country}}</span>
+                  <span ng-show="friend.current_location == null">Unknown</span>
+      </div>
+      <div ng-hide="friend.status == null" class="status">
+        Status: {{friend.status.message}}
+      </div>
       <div class="num-friends">
-        Friends: 1,367
+        Friends:
+        <span ng-show="friend.friend_count == null">0</span>
+        <span ng-show="friend.friend_count != null">{{friend.friend_count}}</span>
       </div>
     </li>
   </ul>
 </div>
-
-
-
 
 
 
